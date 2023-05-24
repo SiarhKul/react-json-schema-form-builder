@@ -1,5 +1,5 @@
 // @flow
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Alert, Input } from 'reactstrap';
 import { createUseStyles } from 'react-jss';
@@ -22,6 +22,7 @@ import {
 import DEFAULT_FORM_INPUTS from './defaults/defaultFormInputs';
 import type { Node } from 'react';
 import type { Mods, InitParameters } from './types';
+import { PortalSelectorPrefixProvider } from './PortalSelectorPrefix';
 
 const useStyles = createUseStyles({
   formBuilder: {
@@ -183,6 +184,8 @@ const useStyles = createUseStyles({
   },
 });
 
+const PortalSelectorPrefixContext = createContext('');
+
 export default function FormBuilder({
   schema,
   uischema,
@@ -190,6 +193,7 @@ export default function FormBuilder({
   onChange,
   mods,
   className,
+  portalSelectorPrefix
 }: {
   schema: string,
   uischema: string,
@@ -197,6 +201,7 @@ export default function FormBuilder({
   onChange: (string, string) => any,
   mods?: Mods,
   className?: string,
+  portalSelectorPrefix?: string
 }): Node {
   const classes = useStyles();
   const schemaData = (parse(schema): { [string]: any }) || {};
@@ -225,6 +230,7 @@ export default function FormBuilder({
   const categoryHash = generateCategoryHash(allFormInputs);
 
   const [isFirstRender, setIsFirstRender] = useState(true);
+  const portalCssPrefix = useMemo(() => portalSelectorPrefix, [portalSelectorPrefix]);
 
   const addProperties = {
     schema: schemaData,
@@ -249,150 +255,153 @@ export default function FormBuilder({
       setIsFirstRender(false);
     }
   }, [isFirstRender, onMount, categoryHash]);
+  
 
   return (
-    <div className={`${classes.formBuilder} ${className || ''}`}>
-      <Alert
-        style={{
-          display: unsupportedFeatures.length === 0 ? 'none' : 'block',
-        }}
-        color='warning'
-      >
-        <h5>Unsupported Features:</h5>
-        {unsupportedFeatures.map((message, index) => (
-          <li key={index}>{message}</li>
-        ))}
-      </Alert>
-      {(!mods || mods.showFormHead !== false) && (
-        <div className={classes.formHead} data-test='form-head'>
-          <div>
-            <h5 data-test='form-name-label'>
-              {mods &&
-              mods.labels &&
-              typeof mods.labels.formNameLabel === 'string'
-                ? mods.labels.formNameLabel
-                : 'Form Name'}
-            </h5>
-            <Input
-              value={schemaData.title || ''}
-              placeholder='Title'
-              type='text'
-              onChange={(ev: SyntheticInputEvent<HTMLInputElement>) => {
-                onChange(
-                  stringify({
-                    ...schemaData,
-                    title: ev.target.value,
-                  }),
-                  uischema,
-                );
-              }}
-              className='form-title'
-            />
-          </div>
-          <div>
-            <h5 data-test='form-description-label'>
-              {mods &&
-              mods.labels &&
-              typeof mods.labels.formDescriptionLabel === 'string'
-                ? mods.labels.formDescriptionLabel
-                : 'Form Description'}
-            </h5>
-            <Input
-              value={schemaData.description || ''}
-              placeholder='Description'
-              type='text'
-              onChange={(ev: SyntheticInputEvent<HTMLInputElement>) =>
-                onChange(
-                  stringify({
-                    ...schemaData,
-                    description: ev.target.value,
-                  }),
-                  uischema,
-                )
-              }
-              className='form-description'
-            />
-          </div>
-        </div>
-      )}
-      <div className={`form-body ${classes.formBody}`}>
-        <DragDropContext
-          onDragEnd={(result) =>
-            onDragEnd(result, {
-              schema: schemaData,
-              uischema: uiSchemaData,
-              onChange: (newSchema, newUiSchema) =>
-                onChange(stringify(newSchema), stringify(newUiSchema)),
-              definitionData: schemaData.definitions,
-              definitionUi: uiSchemaData.definitions,
-              categoryHash,
-            })
-          }
-          className='form-body'
+    <PortalSelectorPrefixProvider prefix={portalCssPrefix}>
+      <div className={`${classes.formBuilder} ${className || ''}`}>
+        <Alert
+          style={{
+            display: unsupportedFeatures.length === 0 ? 'none' : 'block',
+          }}
+          color='warning'
         >
-          <Droppable droppableId='droppable'>
-            {(providedDroppable) => (
-              <div
-                ref={providedDroppable.innerRef}
-                {...providedDroppable.droppableProps}
-              >
-                {generateElementComponentsFromSchemas({
-                  schemaData,
-                  uiSchemaData,
-                  onChange: (newSchema, newUiSchema) =>
-                    onChange(stringify(newSchema), stringify(newUiSchema)),
-                  definitionData: schemaData.definitions,
-                  definitionUi: uiSchemaData.definitions,
-                  path: 'root',
-                  cardOpenArray,
-                  setCardOpenArray,
-                  allFormInputs,
-                  mods,
-                  categoryHash,
-                  Card,
-                  Section,
-                }).map((element: any, index) => (
-                  <Draggable
-                    key={element.key}
-                    draggableId={element.key}
-                    index={index}
-                  >
-                    {(providedDraggable) => (
-                      <div
-                        ref={providedDraggable.innerRef}
-                        {...providedDraggable.draggableProps}
-                        {...providedDraggable.dragHandleProps}
-                      >
-                        {element}
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {providedDroppable.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </div>
-      <div className={`form-footer ${classes.formFooter}`}>
-        {!hideAddButton &&
-          mods?.components?.add &&
-          mods.components.add(addProperties)}
-        {!mods?.components?.add && (
-          <Add
-            tooltipDescription={((mods || {}).tooltipDescriptions || {}).add}
-            labels={mods?.labels ?? {}}
-            addElem={(choice: string) => {
-              if (choice === 'card') {
-                addCardObj(addProperties);
-              } else if (choice === 'section') {
-                addSectionObj(addProperties);
-              }
-            }}
-            hidden={hideAddButton}
-          />
+          <h5>Unsupported Features:</h5>
+          {unsupportedFeatures.map((message, index) => (
+            <li key={index}>{message}</li>
+          ))}
+        </Alert>
+        {(!mods || mods.showFormHead !== false) && (
+          <div className={classes.formHead} data-test='form-head'>
+            <div>
+              <h5 data-test='form-name-label'>
+                {mods &&
+                mods.labels &&
+                typeof mods.labels.formNameLabel === 'string'
+                  ? mods.labels.formNameLabel
+                  : 'Form Name'}
+              </h5>
+              <Input
+                value={schemaData.title || ''}
+                placeholder='Title'
+                type='text'
+                onChange={(ev: SyntheticInputEvent<HTMLInputElement>) => {
+                  onChange(
+                    stringify({
+                      ...schemaData,
+                      title: ev.target.value,
+                    }),
+                    uischema,
+                  );
+                }}
+                className='form-title'
+              />
+            </div>
+            <div>
+              <h5 data-test='form-description-label'>
+                {mods &&
+                mods.labels &&
+                typeof mods.labels.formDescriptionLabel === 'string'
+                  ? mods.labels.formDescriptionLabel
+                  : 'Form Description'}
+              </h5>
+              <Input
+                value={schemaData.description || ''}
+                placeholder='Description'
+                type='text'
+                onChange={(ev: SyntheticInputEvent<HTMLInputElement>) =>
+                  onChange(
+                    stringify({
+                      ...schemaData,
+                      description: ev.target.value,
+                    }),
+                    uischema,
+                  )
+                }
+                className='form-description'
+              />
+            </div>
+          </div>
         )}
+        <div className={`form-body ${classes.formBody}`}>
+          <DragDropContext
+            onDragEnd={(result) =>
+              onDragEnd(result, {
+                schema: schemaData,
+                uischema: uiSchemaData,
+                onChange: (newSchema, newUiSchema) =>
+                  onChange(stringify(newSchema), stringify(newUiSchema)),
+                definitionData: schemaData.definitions,
+                definitionUi: uiSchemaData.definitions,
+                categoryHash,
+              })
+            }
+            className='form-body'
+          >
+            <Droppable droppableId='droppable'>
+              {(providedDroppable) => (
+                <div
+                  ref={providedDroppable.innerRef}
+                  {...providedDroppable.droppableProps}
+                >
+                  {generateElementComponentsFromSchemas({
+                    schemaData,
+                    uiSchemaData,
+                    onChange: (newSchema, newUiSchema) =>
+                      onChange(stringify(newSchema), stringify(newUiSchema)),
+                    definitionData: schemaData.definitions,
+                    definitionUi: uiSchemaData.definitions,
+                    path: 'root',
+                    cardOpenArray,
+                    setCardOpenArray,
+                    allFormInputs,
+                    mods,
+                    categoryHash,
+                    Card,
+                    Section,
+                  }).map((element: any, index) => (
+                    <Draggable
+                      key={element.key}
+                      draggableId={element.key}
+                      index={index}
+                    >
+                      {(providedDraggable) => (
+                        <div
+                          ref={providedDraggable.innerRef}
+                          {...providedDraggable.draggableProps}
+                          {...providedDraggable.dragHandleProps}
+                        >
+                          {element}
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {providedDroppable.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </div>
+        <div className={`form-footer ${classes.formFooter}`}>
+          {!hideAddButton &&
+            mods?.components?.add &&
+            mods.components.add(addProperties)}
+          {!mods?.components?.add && (
+            <Add
+              tooltipDescription={((mods || {}).tooltipDescriptions || {}).add}
+              labels={mods?.labels ?? {}}
+              addElem={(choice: string) => {
+                if (choice === 'card') {
+                  addCardObj(addProperties);
+                } else if (choice === 'section') {
+                  addSectionObj(addProperties);
+                }
+              }}
+              hidden={hideAddButton}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </PortalSelectorPrefixProvider>
   );
 }

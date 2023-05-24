@@ -15,6 +15,7 @@ import FBRadioGroup from './radio/FBRadioGroup';
 import { getRandomId } from './utils';
 import type { Node } from 'react';
 import type { ModLabels } from './types';
+import { usePortalSelectorPrefix } from './PortalSelectorPrefix';
 
 const useStyles = createUseStyles({
   addDetails: {
@@ -50,6 +51,7 @@ export default function Add({
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [createChoice, setCreateChoice] = useState('card');
   const [elementId] = useState(getRandomId());
+  const prefix = usePortalSelectorPrefix();
 
   return (
     <div style={{ display: hidden ? 'none' : 'initial' }}>
@@ -59,7 +61,11 @@ export default function Add({
           onClick={() => setPopoverOpen(true)}
         />
       </span>
-      <UncontrolledTooltip placement='top' target={`${elementId}_add`}>
+      <UncontrolledTooltip
+        className={`${prefix}`}
+        placement='top'
+        target={`${elementId}_add`}
+      >
         {tooltipDescription || 'Create new form element'}
       </UncontrolledTooltip>
       <Popover
@@ -67,7 +73,7 @@ export default function Add({
         target={`${elementId}_add`}
         isOpen={popoverOpen}
         toggle={() => setPopoverOpen(false)}
-        className={`add-details ${classes.addDetails}`}
+        className={`add-details ${classes.addDetails} ${prefix}`}
         id={`${elementId}_add_popover`}
       >
         <PopoverHeader>Create New</PopoverHeader>

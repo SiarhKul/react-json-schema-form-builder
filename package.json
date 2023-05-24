@@ -1,14 +1,14 @@
 {
-  "name": "@ginkgo-bioworks/react-json-schema-form-builder",
-  "version": "2.10.2",
+  "name": "marcusresell/react-json-schema-form-builder-fork",
+  "version": "2.11.0",
   "description": "React Component for visually configuring a JSON Schema-based form",
   "author": {
-    "name": "Nathan Alam",
-    "email": "nathanalam99@gmail.com",
-    "url": "https://github.com/nathanalam"
+    "name": "Marcus Resell",
+    "email": "marcusresell@gmail.com",
+    "url": "https://github.com/marcusresell"
   },
   "license": "Apache-2.0",
-  "repository": "ginkgobioworks/react-json-schema-form-builder",
+  "repository": "marcusresell/react-json-schema-form-builder",
   "keywords": [
     "react",
     "form",
@@ -93,7 +93,13 @@
     "access": "public"
   },
   "bugs": {
-    "url": "https://github.com/ginkgobioworks/react-json-schema-form-builder/issues",
-    "email": "devs@ginkgobioworks.com"
-  }
+    "url": "https://github.com/marcusresell/react-json-schema-form-builder/issues"
+  },
+  "contributors": [
+    {
+      "name": "Nathan Alam",
+      "email": "nathanalam99@gmail.com",
+      "url": "https://github.com/nathanalam"
+    }
+  ]
 }

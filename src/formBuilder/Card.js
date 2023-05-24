@@ -19,6 +19,7 @@ import Tooltip from './Tooltip';
 import { getRandomId } from './utils';
 import type { Node } from 'react';
 import type { Parameters, Mods, FormInput } from './types';
+import { usePortalSelectorPrefix } from './PortalSelectorPrefix';
 
 const useStyles = createUseStyles({
   cardEntries: {
@@ -138,6 +139,7 @@ export default function Card({
   const classes = useStyles();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [elementId] = React.useState(getRandomId());
+  const prefix = usePortalSelectorPrefix();
 
   return (
     <React.Fragment>
@@ -176,6 +178,7 @@ export default function Card({
               </span>
               <UncontrolledTooltip
                 placement='top'
+                className={`${prefix}`}
                 target={`${elementId}_moveupbiginfo`}
               >
                 Move form element up
@@ -188,6 +191,7 @@ export default function Card({
               </span>
               <UncontrolledTooltip
                 placement='top'
+                className={`${prefix}`}
                 target={`${elementId}_movedownbiginfo`}
               >
                 Move form element down
@@ -215,7 +219,11 @@ export default function Card({
               onClick={() => setModalOpen(true)}
             />
           </span>
-          <UncontrolledTooltip placement='top' target={`${elementId}_editinfo`}>
+          <UncontrolledTooltip
+            placement='top'
+            target={`${elementId}_editinfo`}
+            className={`${prefix}`}
+          >
             Additional configurations for this form element
           </UncontrolledTooltip>
           <span id={`${elementId}_trashinfo`}>
@@ -224,6 +232,7 @@ export default function Card({
           <UncontrolledTooltip
             placement='top'
             target={`${elementId}_trashinfo`}
+            className={`${prefix}`}
           >
             Delete form element
           </UncontrolledTooltip>

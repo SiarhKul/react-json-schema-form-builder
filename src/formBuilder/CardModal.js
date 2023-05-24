@@ -14,6 +14,7 @@ import DependencyField from './dependencies/DependencyField';
 import type { Node } from 'react';
 import type { Parameters } from './types';
 import Tooltip from './Tooltip';
+import { usePortalSelectorPrefix } from './PortalSelectorPrefix';
 
 const useStyles = createUseStyles({
   cardModal: {
@@ -61,11 +62,17 @@ export default function CardModal({
   const [componentPropsState, setComponentProps] =
     React.useState(componentProps);
 
+  const prefix = usePortalSelectorPrefix();
+
   React.useEffect(() => {
     setComponentProps(componentProps);
   }, [componentProps]);
   return (
-    <Modal isOpen={isOpen} data-test='card-modal' className={classes.cardModal}>
+    <Modal
+      isOpen={isOpen}
+      data-test='card-modal'
+      className={`${prefix} ${classes.cardModal}`}
+    >
       <ModalHeader className='card-modal-header'>
         <div style={{ display: componentProps.hideKey ? 'none' : 'initial' }}>
           <h3>Additional Settings</h3>

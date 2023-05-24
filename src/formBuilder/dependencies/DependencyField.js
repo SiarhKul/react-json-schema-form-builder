@@ -11,6 +11,7 @@ import DependencyPossibility from './DependencyPossibility';
 import FontAwesomeIcon from '../FontAwesomeIcon';
 import { getRandomId } from '../utils';
 import type { Node } from 'react';
+import { usePortalSelectorPrefix } from '../PortalSelectorPrefix';
 
 const useStyles = createUseStyles({
   dependencyField: {
@@ -80,6 +81,8 @@ export default function DependencyField({
   const [elementId] = useState(getRandomId());
   const classes = useStyles();
   const valueBased = checkIfValueBasedDependency(parameters.dependents || []);
+  const prefix = usePortalSelectorPrefix();
+
   return (
     <div className={`form-dependency ${classes.dependencyField}`}>
       <h4>
@@ -204,6 +207,7 @@ export default function DependencyField({
         <UncontrolledTooltip
           placement='top'
           target={`${elementId}_adddependency`}
+          className={`${prefix}`}
         >
           Add another dependency relation linking this element and other form
           elements

@@ -35,6 +35,7 @@ import FontAwesomeIcon from './FontAwesomeIcon';
 import { getRandomId } from './utils';
 import type { Node } from 'react';
 import type { FormInput, Mods } from './types';
+import { usePortalSelectorPrefix } from './PortalSelectorPrefix';
 
 const useStyles = createUseStyles({
   sectionContainer: {
@@ -186,6 +187,8 @@ export default function Section({
     definitionUi,
     categoryHash,
   };
+  const prefix = usePortalSelectorPrefix();
+
   const hideAddButton =
     schemaData.properties && Object.keys(schemaData.properties).length !== 0;
 
@@ -218,6 +221,7 @@ export default function Section({
               <UncontrolledTooltip
                 placement='top'
                 target={`${elementId}_moveupbiginfo`}
+                className={`${prefix}`}
               >
                 Move form element up
               </UncontrolledTooltip>
@@ -230,6 +234,7 @@ export default function Section({
               <UncontrolledTooltip
                 placement='top'
                 target={`${elementId}_movedownbiginfo`}
+                className={`${prefix}`}
               >
                 Move form element down
               </UncontrolledTooltip>
@@ -477,6 +482,7 @@ export default function Section({
             <UncontrolledTooltip
               placement='top'
               target={`${elementId}_editinfo`}
+              className={`${prefix}`}
             >
               Additional configurations for this form element
             </UncontrolledTooltip>
@@ -489,6 +495,7 @@ export default function Section({
             <UncontrolledTooltip
               placement='top'
               target={`${elementId}_trashinfo`}
+              className={`${prefix}`}
             >
               Delete form element
             </UncontrolledTooltip>

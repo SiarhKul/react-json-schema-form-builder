@@ -10,6 +10,7 @@ import {
   faQuestionCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import FontAwesomeIcon from './FontAwesomeIcon';
+import { usePortalSelectorPrefix } from './PortalSelectorPrefix';
 
 const typeMap = {
   alert: faAsterisk,
@@ -33,6 +34,7 @@ export default function Example({
   id: string,
 }): Node {
   const classes = useStyles();
+  const prefix = usePortalSelectorPrefix();
 
   return (
     <React.Fragment>
@@ -45,7 +47,7 @@ export default function Example({
       </span>
       <UncontrolledTooltip
         autohide={false}
-        className={classes.toolTip}
+        className={`${prefix} ${classes.toolTip}`}
         placement='top'
         target={id}
       >
