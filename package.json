@@ -1,5 +1,5 @@
 {
-  "name": "marcusresell/react-json-schema-form-builder-fork",
+  "name": "marcusresell/react-json-schema-form-builder",
   "version": "2.11.0",
   "description": "React Component for visually configuring a JSON Schema-based form",
   "author": {
