@@ -71,7 +71,9 @@ export default function CardModal({
     <Modal
       isOpen={isOpen}
       data-test='card-modal'
-      className={`${prefix} ${classes.cardModal}`}
+      className={`${classes.cardModal}`}
+      wrapClassName={prefix}
+      backdropClassName={prefix}
     >
       <ModalHeader className='card-modal-header'>
         <div style={{ display: componentProps.hideKey ? 'none' : 'initial' }}>
