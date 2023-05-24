@@ -184,8 +184,6 @@ const useStyles = createUseStyles({
   },
 });
 
-const PortalSelectorPrefixContext = createContext('');
-
 export default function FormBuilder({
   schema,
   uischema,
@@ -193,7 +191,7 @@ export default function FormBuilder({
   onChange,
   mods,
   className,
-  portalSelectorPrefix
+  portalSelectorPrefix,
 }: {
   schema: string,
   uischema: string,
@@ -201,7 +199,7 @@ export default function FormBuilder({
   onChange: (string, string) => any,
   mods?: Mods,
   className?: string,
-  portalSelectorPrefix?: string
+  portalSelectorPrefix?: string,
 }): Node {
   const classes = useStyles();
   const schemaData = (parse(schema): { [string]: any }) || {};
@@ -230,7 +228,10 @@ export default function FormBuilder({
   const categoryHash = generateCategoryHash(allFormInputs);
 
   const [isFirstRender, setIsFirstRender] = useState(true);
-  const portalCssPrefix = useMemo(() => portalSelectorPrefix, [portalSelectorPrefix]);
+  const portalCssPrefix = useMemo(
+    () => portalSelectorPrefix,
+    [portalSelectorPrefix],
+  );
 
   const addProperties = {
     schema: schemaData,
@@ -255,7 +256,6 @@ export default function FormBuilder({
       setIsFirstRender(false);
     }
   }, [isFirstRender, onMount, categoryHash]);
-  
 
   return (
     <PortalSelectorPrefixProvider prefix={portalCssPrefix}>
