@@ -44,7 +44,7 @@ const useStyles = createUseStyles({
       '&:hover': {
         border: '1px solid green',
       },
-      width: '70%',
+      width: '100%',
       'min-width': '400px',
       margin: '2em auto',
       border: '1px solid gray',
@@ -63,6 +63,9 @@ const useStyles = createUseStyles({
       },
       '& .label': {
         float: 'left',
+      },
+      '& .arrows': {
+        display: 'none',
       },
     },
     '& .card-requirements': {
