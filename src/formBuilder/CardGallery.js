@@ -96,7 +96,7 @@ export default function CardGallery({
   return (
     <div className='form_gallery'>
       {componentArr}
-      {componentArr.length === 0 && <h5>No components in "definitions"</h5>}
+      {/*{componentArr.length === 0 && <h5>No components in "definitions"</h5>}*/}
       <div className='form_footer'>
         {!hideAddButton &&
           mods?.components?.add &&

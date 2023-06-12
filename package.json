@@ -1,14 +1,14 @@
 {
-  "name": "@marcusresell/react-json-schema-form-builder",
-  "version": "2.11.2",
+  "name": "@siarhkul/react-json-schema-form-builder",
+  "version": "2.12.0",
   "description": "React Component for visually configuring a JSON Schema-based form",
   "author": {
-    "name": "Marcus Resell",
-    "email": "marcusresell@gmail.com",
-    "url": "https://github.com/marcusresell"
+    "name": "Siarhei Kulaznanka",
+    "email": "SiarhKul@gmail.com",
+    "url": "https://github.com/SiarhKul"
   },
   "license": "Apache-2.0",
-  "repository": "marcusresell/react-json-schema-form-builder",
+  "repository": "SiarhKul/react-json-schema-form-builder",
   "keywords": [
     "react",
     "form",
@@ -93,13 +93,18 @@
     "access": "public"
   },
   "bugs": {
-    "url": "https://github.com/marcusresell/react-json-schema-form-builder/issues"
+    "url": "https://github.com/SiarhKul/react-json-schema-form-builder"
   },
   "contributors": [
     {
       "name": "Nathan Alam",
       "email": "nathanalam99@gmail.com",
       "url": "https://github.com/nathanalam"
+    },
+    {
+      "name": "Marcus Resell",
+      "email": "marcusresell@gmail.com",
+      "url": "https://github.com/marcusresell"
     }
   ]
 }
