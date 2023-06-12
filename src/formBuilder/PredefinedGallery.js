@@ -118,9 +118,11 @@ const useStyles = createUseStyles({
       color: '$green',
       fontSize: '1.5em',
     },
-
     '& .section-container:hover': { border: '1px solid green' },
-    '& .form_gallery_container div:last-child > span': {
+    '& .form_gallery_container > div:last-child > span': {
+      display: 'none !important',
+    },
+    '& .form_gallery_container h4 > .arrows ': {
       display: 'none !important',
     },
   },
