@@ -1,6 +1,6 @@
 {
   "name": "@siarhkul/react-json-schema-form-builder",
-  "version": "2.12.1",
+  "version": "2.12.2",
   "description": "React Component for visually configuring a JSON Schema-based form",
   "author": {
     "name": "Siarhei Kulaznanka",
