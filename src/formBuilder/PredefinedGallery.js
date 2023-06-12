@@ -120,6 +120,9 @@ const useStyles = createUseStyles({
     },
 
     '& .section-container:hover': { border: '1px solid green' },
+    '& .form_gallery_container div:last-child > span': {
+      display: 'none !important',
+    },
   },
 });
 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3110e918-8c4f-47fa-bbea-11b07e972962" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/formBuilder/PredefinedGallery.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/formBuilder/PredefinedGallery.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "main",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "prettierjs.PrettierConfiguration.Package": "C:\\MegaStorage\\WorkIT\\Mercell\\rjsonfb\\react-json-schema-form-builder\\node_modules\\prettier"
+  }
+}]]></component>
+  <component name="ReactDesignerToolWindowState">
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.rcb.reactComponents" value="true" />
+        <entry key="com.haulmont.rcb.reactInspector" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+</project>
