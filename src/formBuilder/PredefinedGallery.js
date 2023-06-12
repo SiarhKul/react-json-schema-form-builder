@@ -13,7 +13,9 @@ import { arrows as arrowsStyle } from './styles';
 import DEFAULT_FORM_INPUTS from './defaults/defaultFormInputs';
 import type { Node } from 'react';
 import type { Mods } from './types';
+import { PortalSelectorPrefixProvider } from './PortalSelectorPrefix';
 
+import { useMemo } from 'react';
 const useStyles = createUseStyles({
   preDefinedGallery: {
     display: 'flex',
@@ -63,9 +65,6 @@ const useStyles = createUseStyles({
       },
       '& .label': {
         float: 'left',
-      },
-      '& .arrows': {
-        display: 'none',
       },
     },
     '& .card-requirements': {
@@ -129,11 +128,15 @@ export default function PredefinedGallery({
   uischema,
   onChange,
   mods,
+  className,
+  portalSelectorPrefix,
 }: {
   schema: string,
   uischema: string,
   onChange: (string, string) => any,
   mods?: Mods,
+  className?: string,
+  portalSelectorPrefix?: string,
 }): Node {
   const classes = useStyles();
   const schemaData = React.useMemo(
@@ -190,28 +193,35 @@ export default function PredefinedGallery({
       onChange(stringify(schemaData), stringify(uiSchemaData));
     }
   }, [uiSchemaData, schemaData, onChange]);
-  return (
-    <div className={classes.preDefinedGallery}>
-      <CardGallery
-        definitionSchema={schemaData.definitions || {}}
-        definitionUiSchema={uiSchemaData.definitions || {}}
-        onChange={(
-          newDefinitions: { [string]: any },
-          newDefinitionsUi: { [string]: any },
-        ) => {
-          // propagate changes in ui definitions to all relavant parties in main schema
 
-          propagateDefinitionChanges(
-            { ...schemaData, definitions: newDefinitions },
-            { ...uiSchemaData, definitions: newDefinitionsUi },
-            (newSchema, newUiSchema) =>
-              onChange(stringify(newSchema), stringify(newUiSchema)),
-            categoryHash,
-          );
-        }}
-        mods={mods}
-        categoryHash={categoryHash}
-      />
-    </div>
+  const portalCssPrefix = useMemo(
+    () => portalSelectorPrefix,
+    [portalSelectorPrefix],
+  );
+  return (
+    <PortalSelectorPrefixProvider prefix={portalCssPrefix}>
+      <div className={`${classes.preDefinedGallery} ${className || ''}`}>
+        <CardGallery
+          definitionSchema={schemaData.definitions || {}}
+          definitionUiSchema={uiSchemaData.definitions || {}}
+          onChange={(
+            newDefinitions: { [string]: any },
+            newDefinitionsUi: { [string]: any },
+          ) => {
+            // propagate changes in ui definitions to all relavant parties in main schema
+
+            propagateDefinitionChanges(
+              { ...schemaData, definitions: newDefinitions },
+              { ...uiSchemaData, definitions: newDefinitionsUi },
+              (newSchema, newUiSchema) =>
+                onChange(stringify(newSchema), stringify(newUiSchema)),
+              categoryHash,
+            );
+          }}
+          mods={mods}
+          categoryHash={categoryHash}
+        />
+      </div>
+    </PortalSelectorPrefixProvider>
   );
 }
