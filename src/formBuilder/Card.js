@@ -261,13 +261,12 @@ export default function Card({
         />
       </Collapse>
       {mods?.components?.add && mods?.components?.add(addProperties)}
-      {/*uncomment comment to add 'add item' button*/}
-      {/*{!mods?.components?.add && addElem && (
+      {!mods?.components?.add && addElem && (
         <Add
           tooltipDescription={((mods || {}).tooltipDescriptions || {}).add}
           addElem={(choice: string) => addElem(choice)}
         />
-      )}*/}
+      )}
     </React.Fragment>
   );
 }
