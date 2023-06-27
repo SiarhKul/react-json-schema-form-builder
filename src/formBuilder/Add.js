@@ -87,10 +87,10 @@ export default function Add({
                 value: 'card',
                 label: labels?.addElementLabel ?? 'Form element',
               },
-              {
-                value: 'section',
-                label: labels?.addSectionLabel ?? 'Form section',
-              },
+              // {
+              //   value: 'section',
+              //   label: labels?.addSectionLabel ?? 'Form section',
+              // },
             ]}
             onChange={(selection) => {
               setCreateChoice(selection);
