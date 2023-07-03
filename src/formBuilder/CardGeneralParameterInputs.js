@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { useRef } from 'react';
 import Select from 'react-select';
 import { Input, FormGroup, FormFeedback } from 'reactstrap';
 import classnames from 'classnames';
@@ -219,17 +219,21 @@ export default function CardGeneralParameterInputs({
               // figure out the new 'type'
               const newCategory = val.value;
 
+              setDescriptionState('');
+
               const newProps = {
                 ...defaultUiProps(newCategory, allFormInputs),
                 ...defaultDataProps(newCategory, allFormInputs),
                 name: parameters.name,
                 required: parameters.required,
               };
+
               if (newProps.$ref !== undefined && !newProps.$ref) {
                 // assign an initial reference
                 const firstDefinition = Object.keys(
                   parameters.definitionData,
                 )[0];
+
                 newProps.$ref = `#/definitions/${firstDefinition || 'empty'}`;
               }
               onChange({
