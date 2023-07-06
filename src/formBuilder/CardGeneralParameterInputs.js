@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useRef } from 'react';
+import React from 'react';
 import Select from 'react-select';
 import { Input, FormGroup, FormFeedback } from 'reactstrap';
 import classnames from 'classnames';
@@ -67,12 +67,12 @@ export default function CardGeneralParameterInputs({
       .map((key) => ({ value: key, label: categoryMap[key] }))
       .sort((a, b) => a.label.localeCompare(b.label));
   };
-
+  const uniqid = Date.now();
   return (
     <React.Fragment>
       <div className='card-entry-row'>
         {showObjectNameInput && (
-          <div className='card-entry'>
+          <div className='card-entry' style={{ display: 'none' }}>
             <h5>
               {`${objectNameLabel} `}
               <Tooltip
@@ -90,8 +90,10 @@ export default function CardGeneralParameterInputs({
 
             <FormGroup>
               <Input
+                disabled
                 invalid={keyError !== null}
-                value={keyState || ''}
+                // value={keyState || ''}
+                value={uniqid}
                 placeholder='Key'
                 type='text'
                 onChange={(ev: SyntheticInputEvent<HTMLInputElement>) =>
