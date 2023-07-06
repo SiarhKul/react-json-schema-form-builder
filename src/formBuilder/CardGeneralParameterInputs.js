@@ -34,6 +34,7 @@ export default function CardGeneralParameterInputs({
   const [keyState, setKeyState] = React.useState(parameters.name);
   const [keyError, setKeyError] = React.useState(null);
   const [titleState, setTitleState] = React.useState(parameters.title);
+  const [displayName, setDisplayName] = React.useState(parameters.title);
   const [descriptionState, setDescriptionState] = React.useState(
     parameters.description,
   );
@@ -72,7 +73,8 @@ export default function CardGeneralParameterInputs({
     <React.Fragment>
       <div className='card-entry-row'>
         {showObjectNameInput && (
-          <div className='card-entry' style={{ display: 'none' }}>
+          // <div className='card-entry' style={{ display: 'none' }}>
+          <div className='card-entry'>
             <h5>
               {`${objectNameLabel} `}
               <Tooltip
@@ -93,7 +95,7 @@ export default function CardGeneralParameterInputs({
                 disabled
                 invalid={keyError !== null}
                 // value={keyState || ''}
-                value={elementId}
+                value={displayName}
                 placeholder='Key'
                 type='text'
                 onChange={(ev: SyntheticInputEvent<HTMLInputElement>) =>
@@ -153,6 +155,7 @@ export default function CardGeneralParameterInputs({
             }
             onBlur={(ev: SyntheticInputEvent<HTMLInputElement>) => {
               onChange({ ...parameters, title: ev.target.value });
+              setDisplayName(ev.target.value);
             }}
             className='card-text'
           />
