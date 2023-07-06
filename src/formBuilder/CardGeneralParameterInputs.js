@@ -67,12 +67,12 @@ export default function CardGeneralParameterInputs({
       .map((key) => ({ value: key, label: categoryMap[key] }))
       .sort((a, b) => a.label.localeCompare(b.label));
   };
-  const uniqid = Date.now();
+
   return (
     <React.Fragment>
       <div className='card-entry-row'>
         {showObjectNameInput && (
-          <div className='card-entry' style={{ display: 'none' }}>
+          <div className='card-entry'>
             <h5>
               {`${objectNameLabel} `}
               <Tooltip
@@ -93,7 +93,7 @@ export default function CardGeneralParameterInputs({
                 disabled
                 invalid={keyError !== null}
                 // value={keyState || ''}
-                value={uniqid}
+                value={elementId}
                 placeholder='Key'
                 type='text'
                 onChange={(ev: SyntheticInputEvent<HTMLInputElement>) =>
