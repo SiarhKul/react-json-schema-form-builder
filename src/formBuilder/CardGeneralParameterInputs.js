@@ -72,7 +72,7 @@ export default function CardGeneralParameterInputs({
     <React.Fragment>
       <div className='card-entry-row'>
         {showObjectNameInput && (
-          <div className='card-entry'>
+          <div className='card-entry' style={{ display: 'none' }}>
             <h5>
               {`${objectNameLabel} `}
               <Tooltip
