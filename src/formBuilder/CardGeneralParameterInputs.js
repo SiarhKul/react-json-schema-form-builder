@@ -73,8 +73,7 @@ export default function CardGeneralParameterInputs({
     <React.Fragment>
       <div className='card-entry-row'>
         {showObjectNameInput && (
-          // <div className='card-entry' style={{ display: 'none' }}>
-          <div className='card-entry'>
+          <div className='card-entry' style={{ display: 'none' }}>
             <h5>
               {`${objectNameLabel} `}
               <Tooltip
@@ -154,7 +153,12 @@ export default function CardGeneralParameterInputs({
               setTitleState(ev.target.value)
             }
             onBlur={(ev: SyntheticInputEvent<HTMLInputElement>) => {
-              onChange({ ...parameters, title: ev.target.value });
+              // added name field to make ObjectName unique
+              onChange({
+                ...parameters,
+                title: ev.target.value,
+                name: ev.target.value,
+              });
               setDisplayName(ev.target.value);
             }}
             className='card-text'
