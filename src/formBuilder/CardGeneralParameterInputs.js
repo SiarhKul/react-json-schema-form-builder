@@ -228,7 +228,7 @@ export default function CardGeneralParameterInputs({
               // figure out the new 'type'
               const newCategory = val.value;
 
-              setDescriptionState('');
+              // setDescriptionState('');
 
               const newProps = {
                 ...defaultUiProps(newCategory, allFormInputs),
